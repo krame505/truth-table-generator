@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if OUT=$(java -jar logic.jar "$1")
+then
+    echo "$OUT" | pandoc ${@:2}
+else
+    echo "$OUT"
+fi
