@@ -1,17 +1,22 @@
 #!/bin/bash
 
+# Treat all arguments up to the first optional argument as formulas, store them
+# in an array
 FORMULAS=()
-
 while [[ $# -gt 0 ]] && [[ $1 != -* ]]
 do
     FORMULAS+=("$1")
     shift
 done
 
+# Invoke the jar with the given formulas
 if OUT=$(java -jar logic.jar "${FORMULAS[@]}")
 then
+    # The operation was successful, run the resulting markdown through pandoc
+    # with the remaining arguments
     echo "$OUT" | pandoc $@
 else
+    # An error occured, print the output
     echo "$OUT"
     exit 1
 fi
