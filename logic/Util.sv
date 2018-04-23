@@ -50,7 +50,11 @@ function showTruthTable
 String ::= es::[Expr]
 {
   return s"""
-${implode(" | | ", map(\ e::Expr -> formatRow(e, map(show(100, _), e.pps)), es))}
+${implode(
+    " | | ",
+    map(
+      \ e::Expr ->
+        implode(" | ", map(\  s::String -> "$$" ++ s ++ "$$", map(show(100, _), e.pps))), es))}
 ${implode(" | ", repeat(":-:", length(es) + length(concat(map((.values), es)))))}
 ${implode(
     "\n",
