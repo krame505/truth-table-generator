@@ -41,11 +41,7 @@ String ::= e::Expr items::[String]
       " | ",
       zipWith(
         \ item::String isTopLevel::Boolean ->
-          substitute(
-            "|", "\\|",
-            substitute(
-              "[", "\\[",
-              if isTopLevel then "$$\\mathbf{" ++ item ++ "}$$" else "$$" ++ item ++ "$$")),
+          if isTopLevel then "$$\\mathbf{" ++ item ++ "}$$" else "$$" ++ item ++ "$$",
         items,
         map(\ component::Decorated Expr -> component.isTopLevel, e.components)));
 }
