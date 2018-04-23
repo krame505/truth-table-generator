@@ -24,9 +24,12 @@ function values
 }
 
 function truthTable
-[[Boolean]] ::= e::Expr
+[[[Boolean]]] ::= es::[Expr]
 {
-  return map(values(e, _), possibleAssignments(e.vars));
+  return
+    map(
+      \ a::[Pair<String Boolean>] -> map(values(_, a), es),
+      possibleAssignments(foldr(unionBy(stringEq, _, _), [], map((.vars), es))));
 }
 
 function formatRow
@@ -48,16 +51,27 @@ String ::= e::Expr items::[String]
 }
 
 function showTruthTable
-String ::= e::Expr
+String ::= es::[Expr]
 {
-  e.isTopLevel = true;
   return s"""
-${formatRow(e, map(show(100, _), e.pps))}
-${implode(" | ", repeat(":-:", length(e.components)))}
+${implode(" | | ", map(\ e::Expr -> formatRow(e, map(show(100, _), e.pps)), es))}
+${implode(" | ", repeat(":-:", length(es) + length(concat(map((.values), es)))))}
 ${implode(
     "\n",
-     map(
-       \ row::[Boolean] -> formatRow(e, map(\ b::Boolean -> if b then "T" else "F", row)),
-       truthTable(e)))}
+    map(
+      \ row::[[Boolean]] ->
+        implode(
+          " | | ",
+          zipWith(
+            \ e::Expr items::[Boolean] ->
+              formatRow(e, map(\ b::Boolean -> if b then "T" else "F", items)),
+            es, row)),
+      truthTable(es)))}
 """;
+}
+
+function rangeFrom
+[Integer] ::= from::Integer
+{
+  return from :: rangeFrom(from + 1);
 }

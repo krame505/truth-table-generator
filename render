@@ -1,8 +1,17 @@
 #!/bin/bash
 
-if OUT=$(java -jar logic.jar "$1")
+FORMULAS=()
+
+while [[ $# -gt 0 ]] && [[ $1 != -* ]]
+do
+    FORMULAS+=("$1")
+    shift
+done
+
+if OUT=$(java -jar logic.jar "${FORMULAS[@]}")
 then
-    echo "$OUT" | pandoc ${@:2}
+    echo "$OUT" | pandoc $@
 else
     echo "$OUT"
+    exit 1
 fi
