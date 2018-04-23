@@ -29,7 +29,7 @@ top::Expr ::= id::String
 abstract production notExpr
 top::Expr ::= e::Expr
 {
-  top.pps = pp"~" :: maybeWrapExprPPs(e);
+  top.pps = pp"\\neg" :: maybeWrapExprPPs(e);
   top.components = top :: e.components;
   top.isBinary = false;
   top.vars = e.vars;
@@ -42,7 +42,7 @@ top::Expr ::= e::Expr
 abstract production andExpr
 top::Expr ::= e1::Expr e2::Expr
 {
-  top.pps = maybeWrapExprPPs(e1) ++ pp"&" :: maybeWrapExprPPs(e2);
+  top.pps = maybeWrapExprPPs(e1) ++ pp"\\land" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
   top.vars = unionBy(stringEq, e1.vars, e2.vars);
@@ -56,7 +56,7 @@ top::Expr ::= e1::Expr e2::Expr
 abstract production orExpr
 top::Expr ::= e1::Expr e2::Expr
 {
-  top.pps = maybeWrapExprPPs(e1) ++ pp"|" :: maybeWrapExprPPs(e2);
+  top.pps = maybeWrapExprPPs(e1) ++ pp"\\lor" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
   top.vars = unionBy(stringEq, e1.vars, e2.vars);
@@ -70,7 +70,7 @@ top::Expr ::= e1::Expr e2::Expr
 abstract production condExpr
 top::Expr ::= e1::Expr e2::Expr
 {
-  top.pps = maybeWrapExprPPs(e1) ++ pp"=>" :: maybeWrapExprPPs(e2);
+  top.pps = maybeWrapExprPPs(e1) ++ pp"\\implies" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
   top.vars = unionBy(stringEq, e1.vars, e2.vars);
@@ -84,7 +84,7 @@ top::Expr ::= e1::Expr e2::Expr
 abstract production bicondExpr
 top::Expr ::= e1::Expr e2::Expr
 {
-  top.pps = maybeWrapExprPPs(e1) ++ pp"<=>" :: maybeWrapExprPPs(e2);
+  top.pps = maybeWrapExprPPs(e1) ++ pp"\\iff" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
   top.vars = unionBy(stringEq, e1.vars, e2.vars);
@@ -100,6 +100,6 @@ function maybeWrapExprPPs
 {
   return
     if e.isBinary
-    then pp"[${head(e.pps)}" :: init(tail(e.pps)) ++ [pp"${last(e.pps)}]"]
+    then pp"(${head(e.pps)}" :: init(tail(e.pps)) ++ [pp"${last(e.pps)})"]
     else e.pps;
 }
