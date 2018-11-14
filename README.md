@@ -2,12 +2,15 @@
 Tool that renders truth tables for Boolean expressions.
 
 ## Usage
-Allowable logic operators:
-`&` | and
-`|` | or
-`~` | not
-`=>` | conditional (implication)
-`<=>` | biconditional
+Supported logic operators:
+
+| Operator | Name |
+| -- | -- |
+| `&` | and |
+| `\|` | or |
+| `~` | not |
+| `=>` | conditional (implication) |
+| `<=>` | biconditional |
 
 For usage information, run `./render --help`.  
 
