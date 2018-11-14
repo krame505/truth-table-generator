@@ -2,15 +2,22 @@
 
 set -e
 
-# Install silver
-git clone https://github.com/melt-umn/silver.git
-cd silver
-./fetch-jars
-./support/bin/install-silver-bin
-cd ..
+# Install silver, if not installed yet
+if [[ ! -x "$(command -v silver)" ]]
+then
+    rm -rf silver
+    git clone https://github.com/melt-umn/silver.git
+    cd silver
+    ./fetch-jars
+    ./support/bin/install-silver-bin
+    cd ..
+fi
 
 # Build the jar
 ./build
 
-# Install pandoc
-sudo apt install pandoc
+# Install pandoc, if not installed yet
+if [[ ! -x "$(command -v pandoc)" ]]
+then
+    sudo apt install pandoc
+fi
