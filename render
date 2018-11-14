@@ -9,6 +9,16 @@ do
     shift
 done
 
+# Print help if requested
+if [[ $# -eq 0 ]] || [[ $1 == "-h" ]] || [[ $1 == "--help" ]]
+then
+    echo "Usage: ./render [expressions] -o <file>"
+    echo "Example: ./render '(a => b) & a' b -o out.pdf"
+    echo "Acceptable file formats include .pdf, .tex, .html"
+    echo "For more options, run pandoc --help"
+    exit 0
+fi
+
 # Invoke the jar with the given formulas
 if OUT=$(java -jar logic.jar "${FORMULAS[@]}")
 then
