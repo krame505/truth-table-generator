@@ -8,7 +8,7 @@ function main
 IOVal<Integer> ::= args::[String] io_in::IO
 {
   local parseResults::[ParseResult<Expr_c>] =
-    zipWith(parse, args, map(\ i::Integer -> s"<arg ${toString(i)}>", rangeFrom(0)));
+    zipWith(parse, args, map(\ i::Integer -> s"<arg ${toString(i)}>", rangeFrom(1)));
   local parseErrors::[String] =
     concat(
       map(
