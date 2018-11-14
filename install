@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+# Install pandoc
+sudo apt install pandoc
+
+# Install silver
+git clone https://github.com/melt-umn/silver.git
+cd silver
+./fetch-jars
+./support/bin/install-silver-bin
+cd ..
+
+# Build the jar
+./build
