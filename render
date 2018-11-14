@@ -14,7 +14,7 @@ if [[ $# -eq 0 ]] || [[ $1 == "-h" ]] || [[ $1 == "--help" ]]
 then
     echo "Usage: ./render [expressions] -o <file>"
     echo "Example: ./render '(a => b) & a' b -o out.pdf"
-    echo "Acceptable file formats include .pdf, .tex, .html"
+    echo "Acceptable file formats include .pdf, .tex, .html, .md"
     echo "For more options, run pandoc --help"
     exit 0
 fi
