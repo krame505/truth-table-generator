@@ -2,9 +2,6 @@
 
 set -e
 
-# Install pandoc
-sudo apt install pandoc
-
 # Install silver
 git clone https://github.com/melt-umn/silver.git
 cd silver
@@ -14,3 +11,6 @@ cd ..
 
 # Build the jar
 ./build
+
+# Install pandoc
+sudo apt install pandoc
