@@ -50,14 +50,14 @@ function showTruthTable
 String ::= es::[Expr]
 {
   return s"""
-${implode(
+| ${implode(
     " | | ",
     map(
       \ e::Expr ->
-        implode(" | ", map(\  s::String -> "$$" ++ s ++ "$$", map(show(100, _), e.pps))), es))}
-${implode(" | ", repeat(":-:", length(es) + length(concat(map((.values), es)))))}
-${implode(
-    "\n",
+        implode(" | ", map(\  s::String -> "$$" ++ s ++ "$$", map(show(100, _), e.pps))), es))} |
+| ${implode(" | ", repeat(":-:", length(es) + length(concat(map((.values), es))) - 1))} |
+| ${implode(
+    " |\n| ",
     map(
       \ row::[[Boolean]] ->
         implode(
@@ -66,7 +66,7 @@ ${implode(
             \ e::Expr items::[Boolean] ->
               formatRow(e, map(\ b::Boolean -> if b then "T" else "F", items)),
             es, row)),
-      truthTable(es)))}
+      truthTable(es)))} |
 """;
 }
 
