@@ -1,7 +1,5 @@
 grammar logic;
 
-import core:monad;
-
 function possibleAssignments
 [[Pair<String Boolean>]] ::= vars::[String]
 {
