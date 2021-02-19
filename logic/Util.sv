@@ -6,7 +6,7 @@ function possibleAssignments
   return
     foldr(
       \ var::String assignments::[[Pair<String Boolean>]] ->
-        do (bindList, returnList) {
+        do {
           assignment::[Pair<String Boolean>] <- assignments;
           val::Boolean <- [true, false];
           return pair(var, val) :: assignment;
@@ -27,7 +27,7 @@ function truthTable
   return
     map(
       \ a::[Pair<String Boolean>] -> map(values(_, a), es),
-      possibleAssignments(foldr(unionBy(stringEq, _, _), [], map((.vars), es))));
+      possibleAssignments(foldr(union, [], map((.vars), es))));
 }
 
 function formatRow

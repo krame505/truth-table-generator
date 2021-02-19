@@ -22,7 +22,7 @@ top::Expr ::= id::String
   top.components = [top];
   top.isBinary = false;
   top.vars = [id];
-  top.value = lookupBy(stringEq, id, top.assignment).fromJust;
+  top.value = lookup(id, top.assignment).fromJust;
   top.values = [top.value];
 }
 
@@ -45,7 +45,7 @@ top::Expr ::= e1::Expr e2::Expr
   top.pps = maybeWrapExprPPs(e1) ++ pp"\\land" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
-  top.vars = unionBy(stringEq, e1.vars, e2.vars);
+  top.vars = union(e1.vars, e2.vars);
   top.value = e1.value && e2.value;
   top.values = e1.values ++ top.value :: e2.values;
 
@@ -59,7 +59,7 @@ top::Expr ::= e1::Expr e2::Expr
   top.pps = maybeWrapExprPPs(e1) ++ pp"\\lor" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
-  top.vars = unionBy(stringEq, e1.vars, e2.vars);
+  top.vars = union(e1.vars, e2.vars);
   top.value = e1.value || e2.value;
   top.values = e1.values ++ top.value :: e2.values;
 
@@ -73,7 +73,7 @@ top::Expr ::= e1::Expr e2::Expr
   top.pps = maybeWrapExprPPs(e1) ++ pp"\\implies" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
-  top.vars = unionBy(stringEq, e1.vars, e2.vars);
+  top.vars = union(e1.vars, e2.vars);
   top.value = !e1.value || e2.value;
   top.values = e1.values ++ top.value :: e2.values;
 
@@ -87,7 +87,7 @@ top::Expr ::= e1::Expr e2::Expr
   top.pps = maybeWrapExprPPs(e1) ++ pp"\\iff" :: maybeWrapExprPPs(e2);
   top.components = e1.components ++ top :: e2.components;
   top.isBinary = true;
-  top.vars = unionBy(stringEq, e1.vars, e2.vars);
+  top.vars = union(e1.vars, e2.vars);
   top.value = e1.value == e2.value;
   top.values = e1.values ++ top.value :: e2.values;
 
